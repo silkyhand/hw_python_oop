@@ -11,6 +11,7 @@ class Training:
                  duration: float,
                  weight: float,
                  ) -> None:
+        self.action         
         pass
 
     def get_distance(self) -> float:
