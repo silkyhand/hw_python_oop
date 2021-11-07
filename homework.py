@@ -1,6 +1,21 @@
 class InfoMessage:
     """Информационное сообщение о тренировке."""
-    pass
+    def __init__(self,
+                 training_type: str,
+                 duration: float,
+                 distance: float,
+                 speed: float,
+                 calories: float) -> None:
+        self.training_type = training_type
+        self.duration = duration
+        self.distance = distance
+        self.speed = speed
+        self.calories = calories         
+        
+    def show_info(self):
+        """Вывести сообщение о тренировке на экран"""
+        print(f'{self.training_type}; Длительность: {self.duration} ч.;'
+              f' Дистанция: {self.distance} км; Ср. скорость: {self.speed} км/ч; Потрачено ккал: {self.calories}.')
 
 
 class Training:
@@ -14,8 +29,8 @@ class Training:
         self.action = action  
         self.duration = duration 
         self.weight = weight     
-        LEN_STEP = 0.65: float
-        M_IN_KM = 1000: int
+        LEN_STEP: float = 0.65
+        M_IN_KM : int = 1000
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
@@ -31,9 +46,11 @@ class Training:
         """Получить количество затраченных калорий."""
         pass
 
-    def show_training_info(self) -> InfoMessage:
+    def show_training_info(self, training_type, distance, mean_speed, spent_calories) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
-        pass
+        messsage = InfoMessage(training_type, duration, distance,mean_speed, spent_calories) 
+        return messsage
+        
 
 
 class Running(Training):
@@ -45,7 +62,7 @@ class Running(Training):
         coeff_calories_2: int = 20
 
     def get_spent_calories(self) -> float:
-        spent_calories = (coeff_calories_1*self.get_distance - 20)*self.weight/M_IN_KM * self.duration   
+        spent_calories = (coeff_calories_1 * self.get_distance - spent_calories_2) * self.weight/M_IN_KM * self.duration   
         return spent_calories
 
 class SportsWalking(Training):
@@ -67,7 +84,7 @@ class Swimming(Training):
         super().__init__(action, duration, weight)
         self.length_pool = length_pool
         self.count_pool = count_pool
-        LEN_STEP = 1.38: float
+        LEN_STEP: float = 1.38
         coeff_calories_1: float = 1.1
         coeff_calories_2: int = 2
 
