@@ -89,16 +89,14 @@ class SportsWalking(Training):
 
 class Swimming(Training):
     """Тренировка: плавание."""
-
     LEN_STEP: ClassVar[float] = 1.38
     COEFF_CALORIES_1: ClassVar[float] = 1.1
     COEFF_CALORIES_2: ClassVar[int] = 2
-    
     length_pool: int
     count_pool: int
-        
+
     def get_mean_speed(self) -> float:
-        mean_speed = (self.length_pool * self.count_pool
+        mean_speed = (self.length_pool * self.COUNT_POOL
                       / self.M_IN_KM / self.duration)
         return mean_speed
 
@@ -113,13 +111,13 @@ def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
 
     if workout_type == 'SWM':
-        swimming = Swimming(data[0], data[1], data[2], data[3], data[4])
+        swimming = Swimming(*data)
         return swimming
     elif workout_type == 'RUN':
-        runninig = Running(data[0], data[1], data[2],)
+        runninig = Running(*data)
         return runninig
     elif workout_type == 'WLK':
-        walking = SportsWalking(data[0], data[1], data[2], data[3])
+        walking = SportsWalking(*data)
         return walking
 
 
