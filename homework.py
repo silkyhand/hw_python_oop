@@ -5,10 +5,10 @@ from typing import ClassVar
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
-    training_type: str                  
-    duration: float                     
-    distance: float                     
-    speed: float                        
+    training_type: str
+    duration: float
+    distance: float
+    speed: float
     calories: float
 
     def get_message(self) -> str:
@@ -21,7 +21,7 @@ class InfoMessage:
 
 
 @dataclass
-class Training: 
+class Training:
     """Базовый класс тренировки."""
 
     LEN_STEP: ClassVar[float] = 0.65
@@ -30,7 +30,7 @@ class Training:
     action: int
     duration: float
     weight: float
-        
+
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
         distance = self.action * self.LEN_STEP / self.M_IN_KM
@@ -56,6 +56,7 @@ class Training:
                                spent_calories)
         return messsage
 
+
 @dataclass
 class Running(Training):
     """Тренировка: бег."""
@@ -71,6 +72,7 @@ class Running(Training):
                           )
         return spent_calories
 
+
 @dataclass
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
@@ -78,13 +80,14 @@ class SportsWalking(Training):
     COEFF_CALORIES_1: ClassVar[float] = 0.035
     COEFF_CALORIES_2: ClassVar[float] = 0.029
     height: float
-    
+
     def get_spent_calories(self) -> float:
         spent_calories = (self.COEFF_CALORIES_1 * self.weight
                           + (self.get_mean_speed() ** 2 // self.height)
                           * self.COEFF_CALORIES_2
                           * self.weight) * self.duration * self.H_IN_MIN
         return spent_calories
+
 
 @dataclass
 class Swimming(Training):
@@ -110,14 +113,13 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     activity = {'SWM': Swimming,
-                'RUN': Running,  
-                'WLK': SportsWalking
-    }
+                'RUN': Running,
+                'WLK': SportsWalking}
     if workout_type not in activity.keys():
         raise AttributeError("Activity not in the list")
-    else: 
+    else:
         return activity[workout_type](*data)
-               
+
 
 def main(training: Training) -> None:
     """Главная функция."""
